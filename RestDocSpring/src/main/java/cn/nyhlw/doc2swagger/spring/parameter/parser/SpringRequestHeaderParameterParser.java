@@ -1,0 +1,51 @@
+package cn.nyhlw.doc2swagger.spring.parameter.parser;
+
+import cn.nyhlw.doc2swagger.core.config.ExtOrder;
+import cn.nyhlw.doc2swagger.core.models.ParameterModel;
+import cn.nyhlw.doc2swagger.core.parse.IMethodParameterParser;
+import cn.nyhlw.doc2swagger.core.parse.impl.AbstractMethodParameterParser;
+import com.google.auto.service.AutoService;
+import lombok.var;
+import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestHeader;
+
+import java.lang.reflect.Parameter;
+import java.lang.reflect.Type;
+
+@AutoService(IMethodParameterParser.class)
+@ExtOrder(400)
+public class SpringRequestHeaderParameterParser extends AbstractMethodParameterParser {
+
+    @Override
+    protected ParameterModel.ParameterLocation getParameterLocation(Parameter parameter, Type actualParamType) {
+        return ParameterModel.ParameterLocation.HEADER;
+    }
+
+    @Override
+    protected boolean isRequired(Parameter parameter, Type actualParamType) {
+        var requestHeaderAnno = AnnotatedElementUtils.getMergedAnnotation(parameter, RequestHeader.class);
+        if (requestHeaderAnno != null)
+        {
+            return requestHeaderAnno.required();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isSupport(Parameter parameter) {
+        return AnnotatedElementUtils.hasAnnotation(parameter, RequestHeader.class);
+    }
+
+    @Override
+    protected String getParameterName(Parameter parameter) {
+        var paramName = super.getParameterName(parameter);
+
+        var requestParamAnno = AnnotatedElementUtils.getMergedAnnotation(parameter, RequestHeader.class);
+        if (requestParamAnno != null && !StringUtils.isEmpty(requestParamAnno.name()))
+        {
+            return requestParamAnno.name();
+        }
+        return paramName;
+    }
+}

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.nyhlw.doc2swagger</groupId>
+    <artifactId>restdoc</artifactId>
+    <packaging>pom</packaging>
+    <version>0.2.1.4</version>
+
+    <parent>
+        <groupId>cn.willingxyz.parentpom</groupId>
+        <artifactId>parentpom-springboot</artifactId>
+        <version>2.1.6.1</version>
+    </parent>
+
+    <modules>
+        <module>RestDocCore</module>
+        <module>RestDocSpring</module>
+        <module>RestDocSpringExamples</module>
+        <module>RestDocSwagger2</module>
+        <module>RestDocSwaggerCommon</module>
+        <module>RestDocSpringSwagger2</module>
+        <module>RestDocBeanValidation</module>
+        <module>RestDocJackson</module>
+    </modules>
+
+    <properties>
+        <!-- version -->
+        <RestDoc.Version>0.2.1.4</RestDoc.Version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.10.4</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.auto.service/auto-service -->
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>1.0-rc6</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+
+
+        <dependencies>
+            <!-- https://mvnrepository.com/artifact/io.swagger/swagger-models -->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>1.5.22</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>2.0.8</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.nyhlw.doc2swagger</groupId>
+                <artifactId>RestDocBeanValidation</artifactId>
+                <version>${RestDoc.Version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.nyhlw.doc2swagger</groupId>
+                <artifactId>RestDocJackson</artifactId>
+                <version>${RestDoc.Version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.nyhlw.doc2swagger</groupId>
+                <artifactId>RestDocSwaggerCommon</artifactId>
+                <version>${RestDoc.Version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.nyhlw.doc2swagger</groupId>
+                <artifactId>RestDocCore</artifactId>
+                <version>${RestDoc.Version}</version>
+            </dependency>
+<!--            <dependency>
+                <groupId>cn.nyhlw.doc2swagger</groupId>
+                <artifactId>RestDocSwagger3</artifactId>
+                <version>${RestDoc.Version}</version>
+            </dependency>-->
+            <dependency>
+                <groupId>cn.nyhlw.doc2swagger</groupId>
+                <artifactId>RestDocSwagger2</artifactId>
+                <version>${RestDoc.Version}</version>
+            </dependency>
+<!--            <dependency>
+                <groupId>cn.nyhlw.doc2swagger</groupId>
+                <artifactId>RestDocSpringSwagger3</artifactId>
+                <version>${RestDoc.Version}</version>
+            </dependency>-->
+            <dependency>
+                <groupId>cn.nyhlw.doc2swagger</groupId>
+                <artifactId>RestDocSpringSwagger2</artifactId>
+                <version>${RestDoc.Version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.nyhlw.doc2swagger</groupId>
+                <artifactId>RestDocSpring</artifactId>
+                <version>${RestDoc.Version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.therapi</groupId>
+                <artifactId>therapi-runtime-javadoc</artifactId>
+                <version>0.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>2.9.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>2.9.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.therapi</groupId>
+                <artifactId>therapi-runtime-javadoc-scribe</artifactId>
+                <version>0.9.0</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>2.0.1.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>27.1-jre</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>sonatype-oss-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.7</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <tags>
+                                <tag>
+                                    <name>ignoreApi</name>
+                                    <placement>a</placement>
+                                    <head>ignore api</head>
+                                </tag>
+                                <tag>
+                                    <name>paramExample</name>
+                                    <placement>a</placement>
+                                    <head>param example</head>
+                                </tag>
+                                <tag>
+                                    <name>returnExample</name>
+                                    <placement>a</placement>
+                                    <head>return example</head>
+                                </tag>
+                                <tag>
+                                    <name>example</name>
+                                    <placement>a</placement>
+                                    <head>example</head>
+                                </tag>
+                            </tags>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

@@ -1,0 +1,16 @@
+cn.nyhlw.doc2swagger.beanvalidation.AssertFalsePostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.AssertTruePostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.DecimalMaxPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.DecimalMinPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.EmailPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.MaxPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.MinPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.NegativeOrZeroPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.NegativePostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.NotBlankPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.NotEmptyPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.NotNullPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.NullPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.PositiveOrZeroPostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.PositivePostProcessor
+cn.nyhlw.doc2swagger.beanvalidation.SizePostProcessor
