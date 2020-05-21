@@ -154,12 +154,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <distributionManagement>
-        <repository>
-            <id>yumy-mvn-repo</id>
-            <url>file:${basedir}/repo</url>
-        </repository>
-    </distributionManagement>
     <profiles>
         <profile>
             <id>senate</id>
