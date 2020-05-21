@@ -23,7 +23,7 @@ Maven项目增加依赖：
 
 ```
 <dependency>
-     <groupId>cn.nyhlw.doc2swagger</groupId>
+     <groupId>cn.yumy.doc2swagger</groupId>
      <artifactId>RestDocSpringSwagger2</artifactId>
      <version>{实际发布的version}</version>
 </dependency>
@@ -48,7 +48,7 @@ public class SwaggerConfig {
                     .apiTitle("rest doc title")
                     .apiDescription("rest doc desc")
                     .apiVersion("api version")
-                    .packages(Arrays.asList("cn.nyhlw.doc2swagger.spring.examples"))
+                    .packages(Arrays.asList("cn.yumy.doc2swagger.spring.examples"))
                     .build();
     }
 }
@@ -82,7 +82,7 @@ public class DubboController {
     /**
     * 获取用户
     * @param user 用户对象信息
-    * @return cn.nyhlw.doc2swagger.spring.examples.dubbo.DubboController.User
+    * @return cn.yumy.doc2swagger.spring.examples.dubbo.DubboController.User
     * @throws
     */
     @DubboUri(path = "/getUsr", method = RequestMethod.POST)
@@ -96,14 +96,14 @@ public class DubboController {
 
 启动应用后，打开 http://host/swagger-ui/index.html 浏览
 
-具体可参考 [RestDocSpringExamples](https://github.com/Willing-Xyz/RestDoc/tree/master/RestDocSpringExamples)。
+具体可参考 [RestDocSpringExamples](https://github.com/yumingyang230/javadoc-to-swagger2/tree/master/RestDocSpringExamples)。
 
 ## BeanValidation支持
 
 如果需要BeanValidation的支持，需要增加以下依赖：
 ```
 <dependency>
-    <groupId>cn.nyhlw.doc2swagger</groupId>
+    <groupId>cn.yumy.doc2swagger</groupId>
     <artifactId>RestDocBeanValidation</artifactId>
     <version>{发布的版本号}</version>
 </dependency>
@@ -133,7 +133,7 @@ public class DubboController {
 如果需要Jackson的支持，增加以下依赖：
 ```
 <dependency>
-    <groupId>cn.nyhlw.doc2swagger</groupId>
+    <groupId>cn.yumy.doc2swagger</groupId>
     <artifactId>RestDocJackson</artifactId>
     <version>{发布的版本号}</version>
 </dependency>
@@ -167,7 +167,7 @@ RestDocConfig _swaggerConfig()
                 //是否隐藏没有方法的Controller
                 .hideEmptyController(true)
                 //配置扫描的包
-                .packages(Arrays.asList("cn.nyhlw.doc2swagger.spring.examples"))
+                .packages(Arrays.asList("cn.yumy.doc2swagger.spring.examples"))
                 //启用httpBasic认证
                 .httpBasicAuth(new RestDocConfig.HttpBasicAuth("restdoc","restdoc"))
                 //配置接口地址
@@ -252,31 +252,6 @@ public class Response {
 ```
 Name属性对应的字段是_name，因此 fieldPrefix应该设置为 `.fieldPrefix("_")`
 
-## 使用swagger2
-
-如果需要使用Swagger2(兼容其他文档工具)，替换依赖为：
-```
-<dependency>
-     <groupId>cn.nyhlw.doc2swagger</groupId>
-     <artifactId>RestDocSpringSwagger2</artifactId>
-     <version>{发布的版本号}</version>
-</dependency>
-<dependency>
-    <groupId>com.github.therapi</groupId>
-    <artifactId>therapi-runtime-javadoc-scribe</artifactId>
-    <version>0.9.0</version>
-    <scope>provided</scope>
-</dependency>
-```
-将EnableSwagger3改为EnableSwagger2
-```java
-@Configuration
-@EnableSwagger2
-public class SwaggerConfig {
-    //...
-}
-```
-
 
 ## docker
 
@@ -284,7 +259,6 @@ docker通过以下命令运行：
 
 `docker run --rm -d -p 8084:8084 willingxyz/restdoc:0.2.1.4`
 
-swagger3规范打开 http://localhost:8084/swagger-ui/index.html 查看。
 swagger2规范打开 http://localhost:8084/swagger2-ui/index.html 查看。
 
 ## 原理
