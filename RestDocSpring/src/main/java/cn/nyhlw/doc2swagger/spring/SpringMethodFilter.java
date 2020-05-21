@@ -65,7 +65,7 @@ public class SpringMethodFilter implements IMethodFilter {
             return false;
         }
         // 如果方法和类上都没有ResponseBody，返回false
-        // todo 过滤注解增加 DubboApi
+        // todo 过滤注解增加 DubboUri
         if (!AnnotatedElementUtils.hasAnnotation(method, DubboUri.class) &&
                 !AnnotatedElementUtils.hasAnnotation(method, ResponseBody.class) &&
                 !AnnotatedElementUtils.hasAnnotation(method.getDeclaringClass(), ResponseBody.class)) {

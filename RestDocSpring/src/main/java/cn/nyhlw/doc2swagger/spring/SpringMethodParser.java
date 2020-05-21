@@ -24,21 +24,21 @@ public class SpringMethodParser implements IMethodParser {
         setDeprecated(method, pathModel);
 
         var controllerRequestMapping = method.getDeclaringClass().getAnnotation(RequestMapping.class);
-        String[] controllerPaths = new String[]{"/"};
+        String[] controllerPaths = new String[]{};
         RequestMethod[] controllerRequestMethods = null;
         if (controllerRequestMapping != null) {
             controllerPaths = combinePath(controllerRequestMapping.path(), controllerRequestMapping.value());
             controllerRequestMethods = controllerRequestMapping.method();
         }
-/*        var controllerDubboApi = method.getDeclaringClass().getAnnotation(DubboApi.class);
-        String[] dubboApiPaths = new String[]{"/"};
+        var controllerDubboApi = method.getDeclaringClass().getAnnotation(DubboApi.class);
+        String[] dubboApiPaths;
         RequestMethod[] dubboApiRequestMethods = null;
         if (controllerDubboApi != null) {
             dubboApiPaths = combinePath(controllerDubboApi.path(), controllerDubboApi.value());
             dubboApiRequestMethods = controllerDubboApi.method();
             controllerPaths = ArrayUtils.addAll(controllerPaths, dubboApiPaths);
             controllerRequestMethods = ArrayUtils.addAll(controllerRequestMethods, dubboApiRequestMethods);
-        }*/
+        }
         var annotations = method.getAnnotations();
         for (var annotation : annotations) {
 
@@ -52,7 +52,8 @@ public class SpringMethodParser implements IMethodParser {
                 var dubboMappingAnno = (DubboUri) annotation;
 
                 if (dubboMappingAnno.method().length == 0) {
-                    methods = new RequestMethod[]{GET, POST, PUT, DELETE, OPTIONS, PATCH, HEAD};
+                    //默认时post接口
+                    methods = new RequestMethod[]{POST};
                 } else {
                     methods = dubboMappingAnno.method();
                 }

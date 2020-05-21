@@ -14,6 +14,7 @@ RestDocSpringSwagger2--------有关swagger2入口的配置
 RestDocSwagger2-------主要加载doc解析类
 ![示例](./images/example_summary.png?)
 
+
 ## 使用
 
 第一步, 为SpringBoot项目中配置依赖, 配置RestDocConfig
@@ -23,8 +24,8 @@ Maven项目增加依赖：
 ```
 <dependency>
      <groupId>cn.nyhlw.doc2swagger</groupId>
-     <artifactId>RestDocSpringSwagger3</artifactId>
-     <version>0.2.1.4</version>
+     <artifactId>RestDocSpringSwagger2</artifactId>
+     <version>{实际发布的version}</version>
 </dependency>
 <dependency>
     <groupId>com.github.therapi</groupId>
@@ -38,7 +39,7 @@ Maven项目增加依赖：
 
 ```java 
 @Configuration
-@EnableSwagger3
+@EnableSwagger2
 public class SwaggerConfig {
     @Bean
     RestDocConfig _swaggerConfig()
@@ -53,14 +54,45 @@ public class SwaggerConfig {
 }
 ```
 
-主要需要修改包名为自己的应用包名。
-
-[其他配置参考](#配置参考)
+主要需要修改包名为自己的应用包名。详细的配置参考 [配置参考](##配置参考)
 
 第二步，启用Annotation Processors 
 
 - **IntelliJ IDEA**: File > Settings > Preferences > Build, Execution, Deployment > Compiler > Annotation Processors > 勾选"Enable annotation processing".
 ![编译设置](./images/compile-setting.png?)
+
+第三步、应用到项目
+
+直接使用常用的注解就可以：
+    @RestController
+    @Controller
+    @RequestMapping
+        @GetMapping
+        @PostMapping
+    
+也可以使用@DubboApi、@DubboUri注解配合（没有controller只有service接口的方式推荐使用此注解）
+````
+/**
+ * 自定义注解测试
+ */
+@DubboApi(path = "/dubboController")
+@Validated
+public class DubboController {
+
+    /**
+    * 获取用户
+    * @param user 用户对象信息
+    * @return cn.nyhlw.doc2swagger.spring.examples.dubbo.DubboController.User
+    * @throws
+    */
+    @DubboUri(path = "/getUsr", method = RequestMethod.POST)
+    public User getUsr(User user) {
+        User result = new User();
+        result.setName("王德发");
+        result.setAge(18);
+        return result;
+    }
+````
 
 启动应用后，打开 http://host/swagger-ui/index.html 浏览
 
@@ -73,7 +105,7 @@ public class SwaggerConfig {
 <dependency>
     <groupId>cn.nyhlw.doc2swagger</groupId>
     <artifactId>RestDocBeanValidation</artifactId>
-    <version>0.2.1.4</version>
+    <version>{发布的版本号}</version>
 </dependency>
 ```
 
@@ -103,7 +135,7 @@ public class SwaggerConfig {
 <dependency>
     <groupId>cn.nyhlw.doc2swagger</groupId>
     <artifactId>RestDocJackson</artifactId>
-    <version>0.2.1.4</version>
+    <version>{发布的版本号}</version>
 </dependency>
 ```
 
@@ -145,7 +177,61 @@ RestDocConfig _swaggerConfig()
                 .build();
 }
 ```
+## 扩展配置参考
+```java 
+@Bean
+RestDocConfigSwagger2Ext restDocConfigSwagger2Ext()
+{
+    return RestDocConfigSwagger2Ext.builder()
+            .swaggerFilters(Arrays.asList(new TestSwaggerFilter()))
+            .build();
+}
 
+
+@AutoService(ISwaggerFilter.class)
+public class TestSwaggerFilter implements ISwaggerFilter {
+    @Override
+    public Swagger handle(Swagger swagger) {
+        System.out.println("handle swagger");
+
+//        swagger.setHost("http://localhost:8084?info=add_by_extension");
+
+        return swagger;
+    }
+}
+
+@Bean
+SwaggerUIConfiguration _swaggerUIConfiguration()
+{
+    var uiConfig = new SwaggerUIConfiguration();
+//  uiConfig.setDefaultModelRendering("model");
+    uiConfig.setDefaultModelExpandDepth(100);
+//  uiConfig.setDocExpansion("full");
+    return uiConfig;
+    }
+
+/**
+ * 配置swagger-ui
+ * 具体配置参考官网：https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/configuration.md
+ */
+@Data
+public class SwaggerUIConfiguration {
+    private boolean _deepLinking = true;
+    private boolean _displayOperationId = false;
+    private int _defaultModelsExpandDepth = 0;
+    private int _defaultModelExpandDepth = 100;
+    private String _defaultModelRendering = "example";
+    private boolean _displayRequestDuration = true;
+
+    private String _docExpansion = "none";
+    private int _maxDisplayedTags;
+    private boolean _showExtensions;
+    private boolean _showCommonExtensions;
+
+    private String _layout = "StandaloneLayout";
+}
+
+```
 其中 fieldPrefix表示字段前缀。
 因为在获取javadoc时，会从field、get方法、set方法上获取，因此如果field有前缀，需要通过fieldPrefix设置，否则将无法获取到javadoc。
 如：
@@ -173,7 +259,7 @@ Name属性对应的字段是_name，因此 fieldPrefix应该设置为 `.fieldPre
 <dependency>
      <groupId>cn.nyhlw.doc2swagger</groupId>
      <artifactId>RestDocSpringSwagger2</artifactId>
-     <version>0.2.1.4</version>
+     <version>{发布的版本号}</version>
 </dependency>
 <dependency>
     <groupId>com.github.therapi</groupId>
@@ -205,4 +291,3 @@ swagger2规范打开 http://localhost:8084/swagger2-ui/index.html 查看。
 
 通过注解处理器在编译时生成javadoc的json文件, 将这些文件转换为Swagger-ui的OpenApi数据格式。
 
-## 自定义开发
