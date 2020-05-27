@@ -253,15 +253,8 @@ public class Response {
 Name属性对应的字段是_name，因此 fieldPrefix应该设置为 `.fieldPrefix("_")`
 
 
-## docker
-
-docker通过以下命令运行：
-
-`docker run --rm -d -p 8084:8084 willingxyz/restdoc:0.2.1.4`
-
-swagger2规范打开 http://localhost:8084/swagger2-ui/index.html 查看。
-
 ## 原理
 
 通过注解处理器在编译时生成javadoc的json文件, 将这些文件转换为Swagger-ui的OpenApi数据格式。
 
+##原项目地址：https://github.com/Willing-Xyz/RestDoc

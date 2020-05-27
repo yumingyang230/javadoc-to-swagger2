@@ -32,12 +32,9 @@ public class SpringMethodParser implements IMethodParser {
         }
         var controllerDubboApi = method.getDeclaringClass().getAnnotation(DubboApi.class);
         String[] dubboApiPaths;
-        RequestMethod[] dubboApiRequestMethods = null;
         if (controllerDubboApi != null) {
-            dubboApiPaths = combinePath(controllerDubboApi.path(), controllerDubboApi.value());
-            dubboApiRequestMethods = controllerDubboApi.method();
+            dubboApiPaths = combinePath( controllerDubboApi.path(),controllerDubboApi.value());
             controllerPaths = ArrayUtils.addAll(controllerPaths, dubboApiPaths);
-            controllerRequestMethods = ArrayUtils.addAll(controllerRequestMethods, dubboApiRequestMethods);
         }
         var annotations = method.getAnnotations();
         for (var annotation : annotations) {
@@ -183,28 +180,39 @@ public class SpringMethodParser implements IMethodParser {
     }
 
     private String normalize(String path) {
-        if (path == null) return path;
-        if (path.isEmpty()) return "/";
-        if (!path.startsWith("/")) return "/" + path;
+        if (path == null) {
+            return path;
+        }
+        if (path.isEmpty()) {
+            return "/";
+        }
+        if (!path.startsWith("/")) {
+            return "/" + path;
+        }
         return path;
     }
 
     private String[] combinePath(String[] path, String[] values) {
         Set<String> paths = new HashSet<>();
-        if (path != null)
+        if (path != null) {
             Arrays.stream(values).forEach(o -> paths.add(o));
-        if (values != null)
+        }
+        if (values != null) {
             Arrays.stream(path).forEach(o -> paths.add(o));
+        }
         return paths.toArray(new String[]{});
     }
 
     private String combineUriPath(String controllerPath, String methodPath) {
-        if (controllerPath.length() > 0 && controllerPath.charAt(0) != '/')
+        if (controllerPath.length() > 0 && controllerPath.charAt(0) != '/') {
             controllerPath = "/" + controllerPath;
-        if (controllerPath.length() > 0 && controllerPath.charAt(controllerPath.length() - 1) != '/')
+        }
+        if (controllerPath.length() > 0 && controllerPath.charAt(controllerPath.length() - 1) != '/') {
             controllerPath = controllerPath + "/";
-        if (methodPath.length() > 0 && methodPath.charAt(0) == '/')
+        }
+        if (methodPath.length() > 0 && methodPath.charAt(0) == '/') {
             methodPath = methodPath.substring(1);
+        }
         return controllerPath + methodPath;
     }
 }

@@ -3,6 +3,7 @@ package cn.yumy.doc2swagger.spring.examples.dubbo;
 import cn.yumy.doc2swagger.spring.annotation.DubboApi;
 import cn.yumy.doc2swagger.spring.annotation.DubboUri;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * @version 1.0.0
  * @date：2020/5/19
  */
-@DubboApi
+@DubboApi("/dubboController")
 @Validated
 public class DubboController {
 
@@ -25,8 +26,8 @@ public class DubboController {
     * @return cn.yumy.doc2swagger.spring.examples.dubbo.DubboController.User
     * @throws
     */
-    @DubboUri(path = "/getUsr", method = RequestMethod.POST)
-    public User getUsr(User user) {
+    @DubboUri(path = "/getUsr")
+    public User getUsr(@RequestBody User user) {
         User result = new User();
         result.setName("王德发");
         result.setAge(18);
@@ -41,7 +42,7 @@ public class DubboController {
     * @return cn.yumy.doc2swagger.spring.examples.dubbo.DubboController.User
     * @throws
     */
-    @DubboUri(name = "getUserById", method = RequestMethod.POST)
+    @DubboUri(name = "/getUserById")
     public User getUserById(String Id){
         User result = new User();
         result.setName("王德发");
