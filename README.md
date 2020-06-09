@@ -94,7 +94,7 @@ public class DubboController {
     }
 ````
 
-启动应用后，打开 http://host/swagger-ui/index.html 浏览
+启动应用后，打开 http://host/swagger2-ui/index.html 浏览
 
 具体可参考 [RestDocSpringExamples](https://github.com/yumingyang230/javadoc-to-swagger2/tree/master/RestDocSpringExamples)。
 
