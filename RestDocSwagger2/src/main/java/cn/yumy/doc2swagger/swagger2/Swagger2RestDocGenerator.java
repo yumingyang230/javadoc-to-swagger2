@@ -321,7 +321,8 @@ public class Swagger2RestDocGenerator implements IRestDocGenerator {
         if (paraName != null)
             name = paraName + ".";
         for (var child : propertyModels) {
-            if (child.isArray()) {
+            if (child.isArray() && child.getChildren().size() != 0) {
+                //普通集合(集合泛型不是对象类型的)不需要递归扫描
                 convertParameterChildren(child.getChildren(), child.getName(), swagger).forEach(o -> parameters.add(o));
             } else if (child.getChildren() == null || child.getChildren().size() == 0) {
                 var parameter = new GenericParameter();
