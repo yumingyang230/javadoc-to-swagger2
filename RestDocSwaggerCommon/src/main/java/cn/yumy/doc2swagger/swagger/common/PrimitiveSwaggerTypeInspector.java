@@ -15,6 +15,8 @@ public class PrimitiveSwaggerTypeInspector implements cn.yumy.doc2swagger.swagge
             new Item(int.class, "integer", "int32"),
             new Item(Long.class, "integer", "int64"),
             new Item(long.class, "integer", "int64"),
+            new Item(Short.class, "number", "short"),
+            new Item(short.class, "number", "short"),
             new Item(Float.class, "number", "float"),
             new Item(float.class, "number", "float"),
             new Item(Double.class, "number", "double"),
