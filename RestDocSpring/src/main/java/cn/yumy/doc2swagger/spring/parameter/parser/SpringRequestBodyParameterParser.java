@@ -33,6 +33,15 @@ public class SpringRequestBodyParameterParser extends AbstractMethodParameterPar
 
     @Override
     public boolean isSupport(Parameter parameter) {
-        return AnnotatedElementUtils.hasAnnotation(parameter, RequestBody.class);
+//        return AnnotatedElementUtils.hasAnnotation(parameter, RequestBody.class);
+//        判断非字符串类型、数字类型、布尔类型
+        if (String.class.isAssignableFrom(parameter.getType()) ||
+                Number.class.isAssignableFrom(parameter.getType()) ||
+                Boolean.class.isAssignableFrom(parameter.getType())
+        ) {
+            //不是对象类型
+            return false;
+        }
+        return true;
     }
 }
